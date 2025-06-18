@@ -1,0 +1,277 @@
+{
+  "name": "Scraping_TradingStrategies",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://www.tradingview.com/scripts/?script_type=strategies",
+        "options": {
+          "pagination": {
+            "pagination": {
+              "parameters": {
+                "parameters": [
+                  {
+                    "name": "page",
+                    "value": "={{ $pageCount + 1 }}"
+                  }
+                ]
+              },
+              "limitPagesFetched": true,
+              "maxRequests": 5,
+              "requestInterval": 1000
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "1ab33978-b561-4536-933b-6ea83779893f",
+      "name": "Obtener Info"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "41645599-fd9f-4ed1-9049-b82bf3d83859",
+      "name": "Trigger Click"
+    },
+    {
+      "parameters": {
+        "html": "={{ $json.data }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.markdown",
+      "typeVersion": 1,
+      "position": [
+        440,
+        0
+      ],
+      "id": "e9e65c3f-490f-4f77-99d5-280d62d852d0",
+      "name": "Markdown"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "Eres un asistente encargado de analizar contenido en formato Markdown proveniente de una pagina web de estrategias de Trading.",
+              "role": "system"
+            },
+            {
+              "content": "Tu tarea es:\n1. Un breve resumen en una línea que describa el propósito general de la web\n2. Una lista de todas las estrategias, descripción, creador y fecha junto al URL que me dirige a la estrategia.\nDevuelve exclusivamente un objeto JSON con el siguiente formato (sin texto adicional, solo JSON válido):\n{\n\"ResumenWeb\":\"un breve resumen de una línea de lo que trata la web\",\n\"Lista\":[\n{\n\"Estrategia\":\"NombreEstrategia1\",\n\"Descripción\":\"DescripciónEstrategia1\",\n\"Creador\":\"CreadorEstrategia1\",\n\"Fecha\":\"FechaEstrategia1\",\n\"URL\":\"https://www.tradingview.com/script/estrategia1\"\n},\n{\n\"Estrategia\":\"NombreEstrategia2\",\n\"Descripción\":\"DescripciónEstrategia2\",\n\"Creador\":\"CreadorEstrategia2,\n\"Fecha\":\"FechaEstrategia2\",\n\"URL\":\"https://www.tradingview.com/script/estrategia2\"\n},\n{\n\"Estrategia\":\"NombreEstrategia3\",\n\"Descripción\":\"DescripciónEstrategia3\",\n\"Creador\":\"CreadorEstrategia3\",\n\"Fecha\":\"FechaEstrategia3\",\n\"URL\":\"https://www.tradingview.com/script/estrategia3\"\n}\n]\n\n}\n"
+            },
+            {
+              "content": "={{ $json.data }}"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        660,
+        0
+      ],
+      "id": "e992b612-905f-47fb-8921-a721d864cbd4",
+      "name": "OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "PAFAlbdkfp6otDUP",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "message.content.Lista",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1020,
+        0
+      ],
+      "id": "b719808d-a82a-47a9-be4e-44b378b2ed9d",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1l2TrNQv-nJLO7L1d7LY3jcTvCXUiUP8K7sRMqxjVE8k",
+          "mode": "list",
+          "cachedResultName": "n8n_estrategiasTrading",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1l2TrNQv-nJLO7L1d7LY3jcTvCXUiUP8K7sRMqxjVE8k/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1l2TrNQv-nJLO7L1d7LY3jcTvCXUiUP8K7sRMqxjVE8k/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Estrategia": "={{ $json.Estrategia }}",
+            "Descripción": "={{ $json['Descripción'] }}",
+            "Fecha Creación": "={{ $json.Fecha }}",
+            "Creador": "={{ $json.Creador }}",
+            "URL": "={{ $json.URL }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Estrategia",
+              "displayName": "Estrategia",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Descripción",
+              "displayName": "Descripción",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Creador",
+              "displayName": "Creador",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Fecha Creación",
+              "displayName": "Fecha Creación",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "URL",
+              "displayName": "URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1240,
+        0
+      ],
+      "id": "0d68e5e6-86e7-4129-8bee-d47d6353323a",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "p3qFnCyGDBOK1VQ9",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Trigger Click": {
+      "main": [
+        [
+          {
+            "node": "Obtener Info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener Info": {
+      "main": [
+        [
+          {
+            "node": "Markdown",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Markdown": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "992cd65d-e407-4974-b764-406aa459ef7b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "13d135ac0c10d6147c2ecb2370dc0e2d5760e54a856321be47520abf4decd5ab"
+  },
+  "id": "nm7dkZnvCwfIJqEc",
+  "tags": []
+}
