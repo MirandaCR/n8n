@@ -55,4 +55,4 @@ Cada ejecución programada:
         └───▶ [Remove Duplicates Emails] ──▶ (resultado)
 
 ```
-![Flujo Scraping n8n](https://github.com/MirandaCR/n8n/blob/main/Scraping%20Estrategias%20de%20Trading/Images/Flujo_n8n_Scraping.png?raw=true)
+![Flujo Scraping n8n](https://github.com/MirandaCR/n8n/blob/main/Scraping%20Google%20Maps/Images/Flujo_n8n_ScrapingMaps.png?raw=true)
