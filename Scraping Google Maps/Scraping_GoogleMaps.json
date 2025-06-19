@@ -1,0 +1,357 @@
+{
+  "name": "Scraping_GoogleMaps",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "125e1ef5-6e32-4b20-ad82-a75b9d48e15b",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "https://www.google.com/maps/search/universidades+monterrey/",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "19acb058-6123-40f4-87f1-aff31ef8f439",
+      "name": "Obtener elementos Maps"
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $input.first().json.data;\nconst regex = /(https:\\/\\/[^/]+)/g;\nconst urls = data.match(regex);\n\nreturn { urls };\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        0
+      ],
+      "id": "b7ff38fb-1c37-4a55-bd3f-bc1153b9cdee",
+      "name": "Extracción de Links"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "urls",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        660,
+        0
+      ],
+      "id": "690cd5bc-c9dc-4d6e-a492-d9f2f63a2677",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "9816fcfb-1364-4b4b-a062-55ab028450a2",
+              "leftValue": "={{ $json.urls }}",
+              "rightValue": "(google|gstatic|ggpht|schema|example)",
+              "operator": {
+                "type": "string",
+                "operation": "notRegex"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        880,
+        0
+      ],
+      "id": "b79b01e3-d776-4057-a86c-c71f6e8509ae",
+      "name": "Filtro link"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        0
+      ],
+      "id": "82c6a5e0-63e9-4828-8289-20edb4819e2c",
+      "name": "Quitar Duplicados"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.urls }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1620,
+        20
+      ],
+      "id": "27b15b70-2fc7-4106-8989-538566ba13f4",
+      "name": "Obtener Contenido Web"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "emails",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1480,
+        -140
+      ],
+      "id": "d64a6659-6d07-4b2d-b7a5-cec6b7980504",
+      "name": "Split Out1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $input.all().map((item) => item.json.data);\nconst emailRegex = /\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b/g;\nconst emails = data.reduce((acc, curr) => {\n  const matches = curr.match(emailRegex);\n  if (matches) {\n    acc.push(...matches);   \n  }\n  return acc\n},[])\n\nreturn { emails };\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1800,
+        20
+      ],
+      "id": "da186225-bcfb-4749-afc8-35bed3fb42cd",
+      "name": "Obtener Emails"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1320,
+        0
+      ],
+      "id": "f10d06ce-5d88-4cf5-85f4-33914421741b",
+      "name": "Iterar Páginas"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        1700,
+        -140
+      ],
+      "id": "9e2152b5-f76e-4d6b-bbe2-59e8d8741a16",
+      "name": "Quitar duplicados"
+    },
+    {
+      "parameters": {
+        "content": "## Obtener elementos degoogle maps\n",
+        "height": 300,
+        "width": 260,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        140,
+        -120
+      ],
+      "id": "0954ec06-0e4d-4c45-b221-024ce76b514e",
+      "name": "Sticky Note",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## Obtener URLs\n\n",
+        "height": 300,
+        "width": 800,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        420,
+        -120
+      ],
+      "id": "e4dc9c3b-afd7-4361-b654-0d7135cf9650",
+      "name": "Sticky Note1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## Extracción de Mails\n\n",
+        "height": 480,
+        "width": 800,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1240,
+        -220
+      ],
+      "id": "1a0b5222-a096-4cd2-8389-6e58798b9ea9",
+      "name": "Sticky Note2",
+      "disabled": true
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Obtener elementos Maps",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener elementos Maps": {
+      "main": [
+        [
+          {
+            "node": "Extracción de Links",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extracción de Links": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Filtro link",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtro link": {
+      "main": [
+        [
+          {
+            "node": "Quitar Duplicados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Quitar Duplicados": {
+      "main": [
+        [
+          {
+            "node": "Iterar Páginas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener Contenido Web": {
+      "main": [
+        [
+          {
+            "node": "Obtener Emails",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener Emails": {
+      "main": [
+        [
+          {
+            "node": "Iterar Páginas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out1": {
+      "main": [
+        [
+          {
+            "node": "Quitar duplicados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Iterar Páginas": {
+      "main": [
+        [
+          {
+            "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Obtener Contenido Web",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "fc405aa1-d8cf-4d32-9706-1a9a1d527512",
+  "meta": {
+    "instanceId": "13d135ac0c10d6147c2ecb2370dc0e2d5760e54a856321be47520abf4decd5ab"
+  },
+  "id": "HRSV0m2YXNDphGWN",
+  "tags": []
+}
