@@ -146,3 +146,6 @@ Este flujo de trabajo permite la creación de un Asistente de IA que responde a 
 │   [Enviar Respuesta Texto]        │
 └───────────────────────────────────┘
 
+```
+
+![Flujo Bot](https://raw.githubusercontent.com/MirandaCR/n8n/refs/heads/main/Bot%20de%20Whatsapp/Images/Flujo_n8n_BotWhatsapp.png)
