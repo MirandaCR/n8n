@@ -27,11 +27,13 @@ Permitir que el agente de IA entienda y responda a mensajes de chat, delegando o
 ```
 
 ## Flujo MCP
+![MCP](https://raw.githubusercontent.com/MirandaCR/n8n/refs/heads/main/Chatbot%20MCP/Images/Flujo%20MCP.png)
 
 ## MCP Gmail
+![MCP Gmail](https://raw.githubusercontent.com/MirandaCR/n8n/refs/heads/main/Chatbot%20MCP/Images/MCP%20Gmail.png)
 
 ## MCP Airtable
+![MCP Airtable](https://raw.githubusercontent.com/MirandaCR/n8n/refs/heads/main/Chatbot%20MCP/Images/MCP%20Airtable.png)
 
 ## Flujo de Scrapping
-
 ![Scrapping](https://raw.githubusercontent.com/MirandaCR/n8n/refs/heads/main/Scraping%20Estrategias%20de%20Trading/Images/Flujo_n8n_Scraping.png)
