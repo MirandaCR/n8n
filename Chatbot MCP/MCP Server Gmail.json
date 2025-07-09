@@ -1,0 +1,172 @@
+{
+  "name": "MCP Server Gmail",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "5024216e-8eeb-468c-b954-54aed7dd0462"
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpTrigger",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "555263f5-877d-4157-928e-ff6149d4e343",
+      "name": "MCP Server Trigger",
+      "webhookId": "5024216e-8eeb-468c-b954-54aed7dd0462"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To', ``, 'string') }}",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        -40,
+        200
+      ],
+      "id": "288e77b0-cc2a-4ca0-8914-3a156482b84b",
+      "name": "Send Mail",
+      "webhookId": "725cc42a-7b73-4a79-923a-55c478befdda",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "nWY7E76XZrk5SN4b",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        100,
+        200
+      ],
+      "id": "30e1d0dd-08df-42fd-acae-ed0e062c9696",
+      "name": "Create a draft",
+      "webhookId": "988ac137-c299-4c9e-ba6d-69c1d7937737",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "nWY7E76XZrk5SN4b",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Return_All', ``, 'boolean') }}",
+        "simple": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Simplify', ``, 'boolean') }}",
+        "filters": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        240,
+        200
+      ],
+      "id": "760b397a-f263-4c93-97a9-283843d7fc56",
+      "name": "Get many messages",
+      "webhookId": "49391df7-0d88-41d7-88e6-8032bc6f96ac",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "nWY7E76XZrk5SN4b",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "operation": "getAll",
+        "returnAll": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Return_All', ``, 'boolean') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        380,
+        200
+      ],
+      "id": "75414514-8900-4395-9641-beca4ff7c0cd",
+      "name": "Get many drafts",
+      "webhookId": "d67fc72a-9cae-4122-b2bd-8dada7b8ca85",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "nWY7E76XZrk5SN4b",
+          "name": "Gmail account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Send Mail": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a draft": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many messages": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many drafts": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c3d60aba-4cb3-4c6e-a44e-6c38ecce8d0d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c92e721e3c5e6a1beec0975a620c71cab11617a38c384162d625a3e87b0fcc5d"
+  },
+  "id": "K4dwAB6PKtQNa1xI",
+  "tags": []
+}

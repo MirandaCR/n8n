@@ -1,0 +1,446 @@
+{
+  "name": "MCP Server Airtable",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "89abc564-cde1-4bb2-88fc-2ee89e3c1d82"
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpTrigger",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "c771a553-b87a-4dc4-bbac-0a20075ace38",
+      "name": "MCP Server Trigger",
+      "webhookId": "89abc564-cde1-4bb2-88fc-2ee89e3c1d82"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "app06cluubJbaz9Lp",
+          "mode": "list",
+          "cachedResultName": "Centro_Bienestar",
+          "cachedResultUrl": "https://airtable.com/app06cluubJbaz9Lp"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblgoisULJprmm3nD",
+          "mode": "list",
+          "cachedResultName": "Servicios",
+          "cachedResultUrl": "https://airtable.com/app06cluubJbaz9Lp/tblgoisULJprmm3nD"
+        },
+        "filterByFormula": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Filter_By_Formula', ``, 'string') }}",
+        "options": {
+          "downloadFields": []
+        }
+      },
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        220
+      ],
+      "id": "41582bad-176f-4088-8774-742752ae8620",
+      "name": "Obtain Record",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "ikATIMytfio4TBio",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "app06cluubJbaz9Lp",
+          "mode": "list",
+          "cachedResultName": "Centro_Bienestar",
+          "cachedResultUrl": "https://airtable.com/app06cluubJbaz9Lp"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblgoisULJprmm3nD",
+          "mode": "list",
+          "cachedResultName": "Servicios",
+          "cachedResultUrl": "https://airtable.com/app06cluubJbaz9Lp/tblgoisULJprmm3nD"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nombre del Servicio": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Nombre_del_Servicio', ``, 'string') }}",
+            "Duración (minutos)": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Duraci_n__minutos_', ``, 'number') }}",
+            "Especialista": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Especialista', ``, 'string') }}",
+            "Precio (Euros)": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Precio__Euros_', ``, 'number') }}",
+            "Disponibilidad": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Disponibilidad', ``, 'string') }}",
+            "Ubicación": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Ubicaci_n', ``, 'string') }}",
+            "Link de Reserva": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Link_de_Reserva', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Nombre del Servicio",
+              "displayName": "Nombre del Servicio",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Tipo",
+              "displayName": "Tipo",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Masaje",
+                  "value": "Masaje"
+                },
+                {
+                  "name": "Terapia Energética",
+                  "value": "Terapia Energética"
+                },
+                {
+                  "name": "Clase Grupal",
+                  "value": "Clase Grupal"
+                },
+                {
+                  "name": "Terapia Manual",
+                  "value": "Terapia Manual"
+                },
+                {
+                  "name": "Terapia Alternativa",
+                  "value": "Terapia Alternativa"
+                },
+                {
+                  "name": "Terapia Tradicional",
+                  "value": "Terapia Tradicional"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Duración (minutos)",
+              "displayName": "Duración (minutos)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Precio (Euros)",
+              "displayName": "Precio (Euros)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Especialista",
+              "displayName": "Especialista",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Disponibilidad",
+              "displayName": "Disponibilidad",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Ubicación",
+              "displayName": "Ubicación",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Link de Reserva",
+              "displayName": "Link de Reserva",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.1,
+      "position": [
+        140,
+        220
+      ],
+      "id": "d9f892ae-89b8-4f19-a054-19819b391c82",
+      "name": "Create a record",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "ikATIMytfio4TBio",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "app06cluubJbaz9Lp",
+          "mode": "list",
+          "cachedResultName": "Centro_Bienestar",
+          "cachedResultUrl": "https://airtable.com/app06cluubJbaz9Lp"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblgoisULJprmm3nD",
+          "mode": "list",
+          "cachedResultName": "Servicios",
+          "cachedResultUrl": "https://airtable.com/app06cluubJbaz9Lp/tblgoisULJprmm3nD"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id__using_to_match_', ``, 'string') }}",
+            "Nombre del Servicio": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Nombre_del_Servicio', ``, 'string') }}",
+            "Duración (minutos)": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Duraci_n__minutos_', ``, 'number') }}",
+            "Precio (Euros)": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Precio__Euros_', ``, 'number') }}",
+            "Especialista": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Especialista', ``, 'string') }}",
+            "Disponibilidad": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Disponibilidad', ``, 'string') }}",
+            "Ubicación": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Ubicaci_n', ``, 'string') }}",
+            "Link de Reserva": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Link_de_Reserva', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Nombre del Servicio",
+              "displayName": "Nombre del Servicio",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Tipo",
+              "displayName": "Tipo",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Masaje",
+                  "value": "Masaje"
+                },
+                {
+                  "name": "Terapia Energética",
+                  "value": "Terapia Energética"
+                },
+                {
+                  "name": "Clase Grupal",
+                  "value": "Clase Grupal"
+                },
+                {
+                  "name": "Terapia Manual",
+                  "value": "Terapia Manual"
+                },
+                {
+                  "name": "Terapia Alternativa",
+                  "value": "Terapia Alternativa"
+                },
+                {
+                  "name": "Terapia Tradicional",
+                  "value": "Terapia Tradicional"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Duración (minutos)",
+              "displayName": "Duración (minutos)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Precio (Euros)",
+              "displayName": "Precio (Euros)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Especialista",
+              "displayName": "Especialista",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Disponibilidad",
+              "displayName": "Disponibilidad",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Ubicación",
+              "displayName": "Ubicación",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Link de Reserva",
+              "displayName": "Link de Reserva",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.1,
+      "position": [
+        280,
+        220
+      ],
+      "id": "196689b0-1fec-4b56-99f9-4120a1153940",
+      "name": "Update record",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "ikATIMytfio4TBio",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Obtain Record": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a record": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update record": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "10400b9f-50da-4a2f-8cbb-c49833dea52a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c92e721e3c5e6a1beec0975a620c71cab11617a38c384162d625a3e87b0fcc5d"
+  },
+  "id": "8Q1WFB5FQi6oecbZ",
+  "tags": []
+}

@@ -1,0 +1,179 @@
+{
+  "name": "MCP Client",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "8c6c0b21-1818-4bbb-8ad4-2c5c0edaa91c",
+      "name": "When chat message received",
+      "webhookId": "95f0e8f0-5680-43a4-b8ae-10fdec634c63"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "14783ad0-0a3f-40bd-89ca-84215196ad1a",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        220,
+        160
+      ],
+      "id": "159f10e7-698a-409c-9e40-ad613e01f173",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "g5lU3IDeA7YFttHe",
+          "name": "OpenAi N8N Test"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sseEndpoint": "https://cmiranda94.app.n8n.cloud/mcp/5024216e-8eeb-468c-b954-54aed7dd0462"
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1,
+      "position": [
+        380,
+        240
+      ],
+      "id": "d9ecbde7-94e4-40b1-a1e1-310707c96095",
+      "name": "Gmail"
+    },
+    {
+      "parameters": {
+        "sseEndpoint": "https://cmiranda94.app.n8n.cloud/mcp/89abc564-cde1-4bb2-88fc-2ee89e3c1d82"
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1,
+      "position": [
+        500,
+        240
+      ],
+      "id": "d1f033e5-d45d-48c4-a88a-b03f07d70110",
+      "name": "Airtable"
+    },
+    {
+      "parameters": {
+        "description": "Flujo para scrappear estrategias de trading de ViewTrading",
+        "workflowId": {
+          "__rl": true,
+          "value": "VRMCHst6Hcg9ccqB",
+          "mode": "list",
+          "cachedResultName": "Curso N8N — Scrapping Trading Strategies"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        640,
+        240
+      ],
+      "id": "02312e94-9e77-48dc-93d4-6905e8d647f3",
+      "name": "Scrapping"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Scrapping": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "58d72722-7189-4ea3-b698-bfda294994ca",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c92e721e3c5e6a1beec0975a620c71cab11617a38c384162d625a3e87b0fcc5d"
+  },
+  "id": "CcvQvsiaIYulZPbo",
+  "tags": []
+}
