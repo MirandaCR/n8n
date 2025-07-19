@@ -1,0 +1,124 @@
+{
+  "name": "Loveable_GPT",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "e17fe458-1ad8-4159-b859-4a29ef1b9d7b",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "89030db2-421a-4c6d-a391-acf23d7d9765",
+      "name": "Webhook",
+      "webhookId": "e17fe458-1ad8-4159-b859-4a29ef1b9d7b"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"respuesta\": \"{{ $json.output }}\"\n} ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        640,
+        0
+      ],
+      "id": "c2dadbe9-e0ab-43d9-b503-135ef0259d08",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Responde a esta consulta: {{ $json.body.prompt }}\n\nLas respuestas no deben contener caracteres extraños. Debe ser texto plano",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "13010cc5-c0f1-4d05-8270-9224f14215a5",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        220,
+        180
+      ],
+      "id": "db39f284-bc01-4fd4-80d5-85fb45fb4a9e",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "g5lU3IDeA7YFttHe",
+          "name": "OpenAi N8N Test"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "9976885e-5750-4c50-8771-11aa97d8e7fb",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c92e721e3c5e6a1beec0975a620c71cab11617a38c384162d625a3e87b0fcc5d"
+  },
+  "id": "ZNjdGti08Wki1pw2",
+  "tags": []
+}

@@ -1,0 +1,124 @@
+{
+  "name": "Loveable_GeneradorHistorias",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "bb23dd9e-3c1c-4066-af2c-b08e0d648856",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "f5266fcd-8bac-435a-85ba-d1d54aac1e14",
+      "name": "Webhook",
+      "webhookId": "bb23dd9e-3c1c-4066-af2c-b08e0d648856"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"respuesta\": \"{{ $json.output }}\"\n} ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        580,
+        0
+      ],
+      "id": "cfbc2485-2476-4bde-871f-a0eed744f772",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Crea una historia divertida de 30 palabras para niños que incluya las siguientes palabras: \n {{ $json.body.nombre }}, {{ $json.body.animal }} y {{ $json.body.deporte }}.\n\nEl texto no debe tener comillas ni caracteres especiales",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "3fb49920-5a7b-4b87-9ad9-d45562075f8a",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        220,
+        160
+      ],
+      "id": "be453b22-b110-4a52-b862-4982832a1e4c",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "g5lU3IDeA7YFttHe",
+          "name": "OpenAi N8N Test"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "73d7a6d6-2b87-4e15-8441-c8e500020fd9",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c92e721e3c5e6a1beec0975a620c71cab11617a38c384162d625a3e87b0fcc5d"
+  },
+  "id": "ebShStFf9ZUhvWcV",
+  "tags": []
+}

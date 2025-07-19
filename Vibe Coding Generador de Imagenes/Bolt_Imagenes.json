@@ -1,0 +1,93 @@
+{
+  "name": "Bolt_Imagenes",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "d54dfbb2-489b-4ca5-9c38-030623a23c03",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "413c3862-3456-4227-b0df-a4c4da58ed17",
+      "name": "Webhook",
+      "webhookId": "d54dfbb2-489b-4ca5-9c38-030623a23c03"
+    },
+    {
+      "parameters": {
+        "respondWith": "binary",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        500,
+        0
+      ],
+      "id": "64e3583a-6164-463a-9d24-a4de56582c08",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "prompt": "={{ $json.body.prompt }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        220,
+        0
+      ],
+      "id": "1d49a85d-1a1a-4a9f-ac0b-9c67237a4a24",
+      "name": "Generate an image",
+      "credentials": {
+        "openAiApi": {
+          "id": "g5lU3IDeA7YFttHe",
+          "name": "OpenAi N8N Test"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Generate an image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate an image": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "418fcdcf-8e68-48f2-bc25-d76e0dcf65b4",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c92e721e3c5e6a1beec0975a620c71cab11617a38c384162d625a3e87b0fcc5d"
+  },
+  "id": "AZGhHezgviTdXnBz",
+  "tags": []
+}
