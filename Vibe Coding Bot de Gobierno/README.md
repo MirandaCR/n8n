@@ -30,9 +30,9 @@ Este flujo integra una interfaz web desarrollada en **Loveable (Vibecoding)** co
 [Frontend recibe JSON con respuesta]
 ```
 
+# Back - n8n
+![Back GPT Loveable](https://raw.githubusercontent.com/MirandaCR/n8n/refs/heads/main/Vibe%20Coding%20Bot%20de%20Gobierno/Images/Flujo_ChatGPT.png)
 
-![Front GPT Loveable]()
-
-
-![Back GPT Loveable]()
+# Front - Loveable
+![Front GPT Loveable](https://raw.githubusercontent.com/MirandaCR/n8n/refs/heads/main/Vibe%20Coding%20Bot%20de%20Gobierno/Images/Bot_ChatGPT.png)
 
